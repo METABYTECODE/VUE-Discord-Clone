@@ -1,0 +1,107 @@
+<template>
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <img class="chat-avatar" :src="getUserAvatar(selectedUser?.discordId, selectedUser?.avatar)" alt="User Avatar" />
+        <span class="chat-username">{{ selectedUser?.username || "Пользователь" }}</span>
+      </div>
+      <div class="chat-header-right">
+        <i class="fas fa-phone"></i>
+        <i class="fas fa-video"></i>
+        <i class="fas fa-thumbtack"></i>
+        <i class="fas fa-user-plus"></i>
+        <div class="chat-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Поиск" />
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    props: { selectedUser: Object },
+    methods: {
+        getUserAvatar(userId, avatar) {
+  if (avatar?.startsWith("http")) return avatar; // Если передан полный URL – возвращаем его
+  if (!userId) return "https://cdn.discordapp.com/embed/avatars/0.png";
+  return avatar
+    ? `https://cdn.discordapp.com/avatars/${userId}/${avatar}.png`
+    : `https://cdn.discordapp.com/embed/avatars/${parseInt(userId, 10) % 5}.png`;
+},
+    },
+  };
+  </script>
+  
+  <style scoped>
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2f3136;
+    padding: 10px 15px;
+    border-bottom: 1px solid #202225;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.chat-username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.chat-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.chat-header-right i {
+  color: #b9bbbe;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.chat-header-right i:hover {
+  color: #ffffff;
+}
+
+.chat-search {
+  display: flex;
+  align-items: center;
+  background-color: #40444b;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.chat-search i {
+  color: #72767d;
+  margin-right: 5px;
+}
+
+.chat-search input {
+  background: none;
+  border: none;
+  color: #ffffff;
+  outline: none;
+  font-size: 14px;
+  width: 150px;
+}
+
+.chat-search input::placeholder {
+  color: #72767d;
+}
+  </style>
+  
